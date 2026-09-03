@@ -86,9 +86,9 @@ export default function Footer() {
         {/* Center - social icons */}
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
           {[
-            { icon: GithubIcon, href: 'https://github.com/gabrielrcalixto', label: 'GitHub' },
-            { icon: LinkedinIcon, href: 'https://linkedin.com/in/gabrielrcalixto', label: 'LinkedIn' },
-            { icon: Mail, href: 'mailto:gabriel@example.com', label: 'Email' },
+            { icon: GithubIcon, href: 'https://github.com/Rodrigues011xbx', label: 'GitHub' },
+            { icon: LinkedinIcon, href: 'https://www.linkedin.com/in/gabriel-rodrigues-calixto-364a142a2/', label: 'LinkedIn' },
+            { icon: Mail, href: 'mailto:contato.gabrieldev.rc@gmail.com', label: 'Email' },
           ].map((social) => (
             <a
               key={social.label}
