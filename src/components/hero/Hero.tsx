@@ -8,7 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const nameRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
   const metaLeftRef = useRef<HTMLDivElement>(null);
@@ -25,14 +24,13 @@ export default function Hero() {
       const entranceTl = gsap.timeline({ delay: 3 });
 
       entranceTl.fromTo(
-        '.hero-name-line',
-        { y: 120, opacity: 0, skewY: 5 },
+        '.hero-visual-wrapper',
+        { y: 80, opacity: 0, scale: 0.94 },
         {
           y: 0,
           opacity: 1,
-          skewY: 0,
+          scale: 1,
           duration: 1.2,
-          stagger: 0.15,
           ease: 'power4.out',
         }
       );
@@ -76,8 +74,8 @@ export default function Hero() {
         },
       });
 
-      // Name shrinks and moves up
-      scrollTl.fromTo('.hero-name-scroll-wrapper',
+      // Visual shrinks and moves up
+      scrollTl.fromTo('.hero-visual-wrapper',
         { scale: 1, y: 0, opacity: 1 },
         {
           scale: 0.4,
@@ -244,34 +242,39 @@ export default function Hero() {
           gap: '1.5rem',
         }}
       >
-        {/* Name */}
+        {/* Animated system visual */}
         <div
-          ref={nameRef}
-          style={{
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+          className="hero-visual-wrapper"
+          style={{ width: 'min(90vw, 900px)', willChange: 'transform, opacity' }}
         >
-          {['GABRIEL', 'RODRIGUES', 'CALIXTO'].map((line) => (
-            <div key={line} className="hero-name-scroll-wrapper" style={{ willChange: 'transform, opacity' }}>
-              <div
-                className="hero-name-line font-display"
-                style={{
-                  fontSize: 'clamp(2.5rem, 11vw, 14rem)',
-                  fontWeight: 700,
-                  lineHeight: 0.9,
-                  letterSpacing: '-0.04em',
-                  color: 'var(--color-text)',
-                  opacity: 0,
-                  willChange: 'transform, opacity',
-                }}
-              >
-                {line}
+          <div className="hero-visual">
+            <div className="hero-visual-header font-mono">
+              <span>GRC / SYSTEMS LAB</span>
+              <span className="hero-live-status"><i /> LIVE / 01</span>
+            </div>
+            <div className="hero-visual-stage" aria-label="Animated visualization of a scalable digital system">
+              <div className="hero-visual-grid" />
+              <div className="hero-scanline" />
+              <div className="hero-connection hero-connection-one" />
+              <div className="hero-connection hero-connection-two" />
+              <div className="hero-connection hero-connection-three" />
+              <div className="hero-node hero-node-one"><span>API</span></div>
+              <div className="hero-node hero-node-two"><span>DATA</span></div>
+              <div className="hero-node hero-node-three"><span>EDGE</span></div>
+              <div className="hero-node hero-node-core"><span>CORE</span></div>
+              <div className="hero-packet hero-packet-one" />
+              <div className="hero-packet hero-packet-two" />
+              <div className="hero-packet hero-packet-three" />
+              <div className="hero-visual-readout font-mono">
+                <span>REQUESTS <b>24.8K</b></span>
+                <span>UPTIME <b>99.99%</b></span>
               </div>
             </div>
-          ))}
+            <div className="hero-visual-footer font-mono">
+              <span>NODE.JS / TYPESCRIPT / AWS</span>
+              <span>BUILDING SYSTEMS THAT SCALE</span>
+            </div>
+          </div>
         </div>
 
         {/* Subtitle */}
