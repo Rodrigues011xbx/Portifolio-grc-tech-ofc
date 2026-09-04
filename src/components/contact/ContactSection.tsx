@@ -12,17 +12,17 @@ gsap.registerPlugin(ScrollTrigger);
 const links = [
   {
     label: 'GitHub',
-    href: 'https://github.com/gabrielrcalixto',
+    href: 'https://github.com/Rodrigues011xbx',
     icon: GithubIcon,
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/gabrielrcalixto',
+    href: 'https://www.linkedin.com/in/gabriel-rodrigues-calixto-364a142a2/',
     icon: LinkedinIcon,
   },
   {
     label: 'Email',
-    href: 'mailto:gabriel@example.com',
+    href: 'mailto:contato.gabrieldev.rc@gmail.com',
     icon: Mail,
   },
 ];
