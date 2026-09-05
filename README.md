@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/banner.png" alt="GRC Tech Banner" width="100%" />
+<img src="public/hero.png" alt="Gabriel Rodrigues Calixto portfolio hero" width="100%" />
 
 <br />
 
