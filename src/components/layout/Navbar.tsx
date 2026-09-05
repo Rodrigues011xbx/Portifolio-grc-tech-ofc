@@ -79,6 +79,7 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
+        className="site-navbar"
         style={{
           position: 'fixed',
           top: 0,

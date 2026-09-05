@@ -105,16 +105,30 @@ export default function AboutSection() {
         }}
       >
         <div className="about-block" style={{ opacity: 0 }}>
-          <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', overflow: 'hidden', borderRadius: '4px', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}>
-            <img
-              src="/profile.png"
-              alt="Gabriel Rodrigues Calixto"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-            />
+          <div className="about-architecture" aria-label="System architecture overview">
+            <div className="about-architecture-header font-mono">
+              <span>GRC / Architecture</span>
+              <span><i /> Operational</span>
+            </div>
+            <div className="about-architecture-stage">
+              <div className="about-architecture-ring about-architecture-ring-large" />
+              <div className="about-architecture-ring about-architecture-ring-small" />
+              <div className="about-architecture-line about-architecture-line-one" />
+              <div className="about-architecture-line about-architecture-line-two" />
+              <div className="about-architecture-line about-architecture-line-three" />
+              <div className="about-architecture-node about-architecture-node-api">API</div>
+              <div className="about-architecture-node about-architecture-node-data">DATA</div>
+              <div className="about-architecture-node about-architecture-node-queue">QUEUE</div>
+              <div className="about-architecture-core">
+                <strong>GRC</strong>
+                <span>CORE SYSTEM</span>
+              </div>
+            </div>
+            <div className="about-architecture-footer font-mono">
+              <span>USE CASES</span>
+              <span>EVENTS</span>
+              <span>INFRASTRUCTURE</span>
+            </div>
           </div>
         </div>
 

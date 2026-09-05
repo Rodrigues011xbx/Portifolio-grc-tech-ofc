@@ -7,6 +7,20 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+let lenisInstance: Lenis | null = null;
+
+export function scrollToSection(href: string) {
+  const target = document.querySelector(href);
+  if (!(target instanceof HTMLElement)) return;
+
+  if (lenisInstance) {
+    lenisInstance.scrollTo(target, { offset: 0 });
+    return;
+  }
+
+  target.scrollIntoView({ behavior: 'smooth' });
+}
+
 export function useSmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
 
@@ -21,6 +35,7 @@ export function useSmoothScroll() {
     });
 
     lenisRef.current = lenis;
+    lenisInstance = lenis;
 
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -32,6 +47,7 @@ export function useSmoothScroll() {
 
     return () => {
       lenis.destroy();
+      lenisInstance = null;
       gsap.ticker.remove(lenis.raf);
     };
   }, []);
