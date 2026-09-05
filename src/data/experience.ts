@@ -2,13 +2,13 @@ import { Experience } from '@/types';
 
 export const experiences: Experience[] = [
   {
-    id: 'wello',
+    id: 'project-one',
     role: 'Backend Developer',
-    company: 'Wello',
+    company: 'Project One',
     period: '2025 — Present',
     year: '2026',
     description:
-      'Developing and architecting a complex SaaS platform for occupational risk management. Building scalable backend systems with modular architecture, async processing, and cloud infrastructure.',
+      'Developing and architecting a scalable backend product with modular architecture, async processing, and cloud infrastructure.',
     technologies: [
       'Node.js',
       'TypeScript',
@@ -23,7 +23,7 @@ export const experiences: Experience[] = [
       'Designed use-case driven architecture',
       'Implemented async message processing with RabbitMQ',
       'Built document management system with MinIO',
-      'Integrated AI capabilities for risk analysis',
+      'Integrated services to support evolving product requirements',
     ],
   },
 ];

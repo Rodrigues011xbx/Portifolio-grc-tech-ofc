@@ -2,10 +2,10 @@ import { Project } from '@/types';
 
 export const projects: Project[] = [
   {
-    id: 'wello',
-    title: 'WELLO',
-    description: 'SaaS platform focused on occupational risk management. A complex system built with modular architecture, async processing, and AI integration.',
-    category: 'SaaS Platform',
+    id: 'project-one',
+    title: 'PROJECT ONE',
+    description: 'A scalable backend product built with modular architecture, async processing, and cloud infrastructure.',
+    category: 'Backend Platform',
     technologies: [
       'Node.js',
       'TypeScript',
@@ -17,7 +17,7 @@ export const projects: Project[] = [
       'MinIO',
       'Docker',
     ],
-    image: '/projects/wello.jpg',
+    image: '/projects/placeholder.jpg',
     year: '2026',
     featured: true,
     details: [
@@ -26,10 +26,9 @@ export const projects: Project[] = [
       'REST APIs',
       'Async Processing',
       'Document Management',
-      'Dynamic Forms',
-      'Risk Management',
-      'Action Plans',
-      'AI Integration',
+      'Dynamic Workflows',
+      'Cloud Infrastructure',
+      'Service Integration',
     ],
   },
   {

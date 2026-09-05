@@ -1,368 +1,124 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
+import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { useCursor } from '@/components/ui/CustomCursor';
+import { scrollToSection } from '@/hooks/useSmoothScroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const navItems = [
+  { label: 'Home', href: '#hero' },
+  { label: 'About', href: '#about' },
+  { label: 'Work / Portfolio', href: '#projects' },
+  { label: 'Blog', href: '#experience' },
+  { label: 'Contact', href: '#contact' },
+];
+
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const subtitleRef = useRef<HTMLDivElement>(null);
-  const taglineRef = useRef<HTMLDivElement>(null);
-  const metaLeftRef = useRef<HTMLDivElement>(null);
-  const metaRightRef = useRef<HTMLDivElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
-  const bgGridRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const visualRef = useRef<HTMLDivElement>(null);
+  const { setCursorVariant } = useCursor();
+
+  const goTo = useCallback((href: string) => {
+    scrollToSection(href);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const ctx = gsap.context(() => {
-      // Entrance animation
-      const entranceTl = gsap.timeline({ delay: 3 });
+      if (!reduced) {
+        const entranceTl = gsap.timeline({ delay: 2.9 });
 
-      entranceTl.fromTo(
-        '.hero-visual-wrapper',
-        { y: 80, opacity: 0, scale: 0.94 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 1.2,
-          ease: 'power4.out',
-        }
-      );
+        entranceTl.fromTo('.editorial-nav, .editorial-name', { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out' });
+        entranceTl.fromTo('.editorial-copy, .editorial-socials, .editorial-cta', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out' }, '-=0.35');
+      }
 
-      entranceTl.fromTo(
-        subtitleRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
-        '-=0.6'
-      );
-
-      entranceTl.fromTo(
-        taglineRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
-        '-=0.5'
-      );
-
-      entranceTl.fromTo(
-        [metaLeftRef.current, metaRightRef.current],
-        { opacity: 0 },
-        { opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out' },
-        '-=0.4'
-      );
-
-      entranceTl.fromTo(
-        scrollIndicatorRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-        '-=0.3'
-      );
-
-      // Scroll-driven animation
-      const scrollTl = gsap.timeline({
+      gsap.to(copyRef.current, {
+        y: -30,
+        opacity: 0.65,
+        ease: 'none',
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: '+=1500',
+          end: 'bottom top',
           scrub: 1,
-          pin: true,
+          onLeaveBack: () => {
+            gsap.to(copyRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', overwrite: true });
+          },
         },
       });
 
-      // Visual shrinks and moves up
-      scrollTl.fromTo('.hero-visual-wrapper',
-        { scale: 1, y: 0, opacity: 1 },
-        {
-          scale: 0.4,
-          y: -100,
-          opacity: 0,
-          stagger: 0.05,
-          ease: 'none',
-          immediateRender: false,
-        }, 0);
+      gsap.to(visualRef.current, {
+        y: -50,
+        opacity: 0.75,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+          onLeaveBack: () => {
+            gsap.to(visualRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', overwrite: true });
+          },
+        },
+      });
 
-      // Subtitle fades
-      scrollTl.fromTo(subtitleRef.current,
-        { scale: 1, y: 0, opacity: 1 },
-        {
-          y: -60,
-          opacity: 0,
-          scale: 0.9,
-          ease: 'none',
-          immediateRender: false,
-        }, 0);
-
-      // Tagline moves up and fades
-      scrollTl.fromTo(taglineRef.current,
-        { y: 0, opacity: 1 },
-        {
-          y: -80,
-          opacity: 0,
-          ease: 'none',
-          immediateRender: false,
-        }, 0.1);
-
-      // Meta elements fade
-      scrollTl.fromTo([metaLeftRef.current, metaRightRef.current],
-        { opacity: 1 },
-        {
-          opacity: 0,
-          ease: 'none',
-          immediateRender: false,
-        }, 0);
-
-      // Background grid scales
-      scrollTl.fromTo(bgGridRef.current,
-        { scale: 1, opacity: 0.03 },
-        {
-          scale: 1.5,
-          opacity: 0,
-          ease: 'none',
-          immediateRender: false,
-        }, 0);
-
-      // Scroll indicator fades early
-      scrollTl.fromTo(scrollIndicatorRef.current,
-        { y: 0, opacity: 1 },
-        {
-          opacity: 0,
-          y: -20,
-          ease: 'none',
-          duration: 0.3,
-          immediateRender: false,
-        }, 0);
     }, section);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="hero"
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Background grid with perspective */}
-      <div
-        ref={bgGridRef}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.03,
-          backgroundImage:
-            'linear-gradient(rgba(200, 255, 0, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(200, 255, 0, 0.5) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
-          transform: 'perspective(800px) rotateX(60deg)',
-          transformOrigin: 'center 120%',
-        }}
-      />
+    <section ref={sectionRef} id="hero" className="hero hero--editorial">
+      <div className="editorial-frame">
+        <nav className="editorial-nav" aria-label="Primary navigation">
+          {navItems.map((item, index) => (
+            <a key={item.href} href={item.href} className={index === 0 ? 'is-active' : ''} onClick={(event) => { event.preventDefault(); goTo(item.href); }}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
 
-      {/* Radial gradient overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, var(--color-bg) 70%)',
-          pointerEvents: 'none',
-        }}
-      />
+        <div className="editorial-stage">
+          <div className="editorial-name" aria-hidden="true">
+            <span>Gabriel</span>
+            <span>Rodrigues</span>
+          </div>
 
-      {/* Meta info - Left */}
-      <div
-        ref={metaLeftRef}
-        className="font-mono"
-        style={{
-          position: 'absolute',
-          left: 'clamp(1.5rem, 5vw, 6rem)',
-          bottom: 'clamp(2rem, 5vh, 5rem)',
-          fontSize: '0.6rem',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          color: 'var(--color-text-muted)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.5rem',
-          opacity: 0,
-        }}
-      >
-        <span>Backend Engineer</span>
-        <span style={{ color: 'var(--color-accent)', opacity: 0.6 }}>
-          Available for Select Projects
-        </span>
-      </div>
-
-      {/* Meta info - Right */}
-      <div
-        ref={metaRightRef}
-        className="font-mono"
-        style={{
-          position: 'absolute',
-          right: 'clamp(1.5rem, 5vw, 6rem)',
-          bottom: 'clamp(2rem, 5vh, 5rem)',
-          fontSize: '0.6rem',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          color: 'var(--color-text-muted)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.3rem',
-          textAlign: 'right',
-          opacity: 0,
-        }}
-      >
-        <span>Node.js</span>
-        <span>TypeScript</span>
-        <span>AWS</span>
-        <span>PostgreSQL</span>
-      </div>
-
-      {/* Main content */}
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 2,
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1.5rem',
-        }}
-      >
-        {/* Animated system visual */}
-        <div
-          className="hero-visual-wrapper"
-          style={{ width: 'min(90vw, 900px)', willChange: 'transform, opacity' }}
-        >
-          <div className="hero-visual">
-            <div className="hero-visual-header font-mono">
-              <span>GRC / SYSTEMS LAB</span>
-              <span className="hero-live-status"><i /> LIVE / 01</span>
-            </div>
-            <div className="hero-visual-stage" aria-label="Animated visualization of a scalable digital system">
-              <div className="hero-visual-grid" />
-              <div className="hero-scanline" />
-              <div className="hero-connection hero-connection-one" />
-              <div className="hero-connection hero-connection-two" />
-              <div className="hero-connection hero-connection-three" />
-              <div className="hero-node hero-node-one"><span>API</span></div>
-              <div className="hero-node hero-node-two"><span>DATA</span></div>
-              <div className="hero-node hero-node-three"><span>EDGE</span></div>
-              <div className="hero-node hero-node-core"><span>CORE</span></div>
-              <div className="hero-packet hero-packet-one" />
-              <div className="hero-packet hero-packet-two" />
-              <div className="hero-packet hero-packet-three" />
-              <div className="hero-visual-readout font-mono">
-                <span>REQUESTS <b>24.8K</b></span>
-                <span>UPTIME <b>99.99%</b></span>
-              </div>
-            </div>
-            <div className="hero-visual-footer font-mono">
-              <span>NODE.JS / TYPESCRIPT / AWS</span>
-              <span>BUILDING SYSTEMS THAT SCALE</span>
+          <div ref={copyRef} className="editorial-copy">
+            <p>I create backend systems that blend precision with scale, crafting APIs and products that stay fast under real load.</p>
+            <div className="editorial-socials" aria-label="Social links">
+              <a href="#contact" aria-label="X profile">X</a>
+              <a href="#contact" aria-label="LinkedIn profile">in</a>
+              <a href="#contact" aria-label="GitHub profile">GH</a>
             </div>
           </div>
-        </div>
 
-        {/* Subtitle */}
-        <div
-          ref={subtitleRef}
-          className="font-mono"
-          style={{
-            fontSize: 'clamp(0.55rem, 0.8vw, 0.75rem)',
-            letterSpacing: '0.25em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-secondary)',
-            marginTop: '1rem',
-            opacity: 0,
-          }}
-        >
-          Backend / Full-Stack Developer
-        </div>
+          <div ref={visualRef} className="editorial-portrait-wrap">
+            <div className="editorial-portrait-ring" />
+            <Image className="editorial-portrait" src="/profile.png" alt="Gabriel Rodrigues Calixto" width={800} height={800} priority />
+          </div>
 
-        {/* Tagline */}
-        <div
-          ref={taglineRef}
-          className="font-display"
-          style={{
-            fontSize: 'clamp(0.9rem, 1.5vw, 1.3rem)',
-            fontWeight: 300,
-            color: 'var(--color-text-secondary)',
-            letterSpacing: '0.05em',
-            marginTop: '0.5rem',
-            opacity: 0,
-          }}
-        >
-          Building systems that scale.
-        </div>
-      </div>
+          <div className="editorial-pitch">
+            <p>Backend architecture with human judgment: systems that are clear, resilient, and ready to grow.</p>
+            <button type="button" className="editorial-cta" onClick={() => goTo('#contact')} onMouseEnter={() => setCursorVariant('hover')} onMouseLeave={() => setCursorVariant('default')}>
+              Let&apos;s talk <ArrowUpRight size={16} strokeWidth={2} />
+            </button>
+          </div>
 
-      {/* Scroll Indicator */}
-      <div
-        ref={scrollIndicatorRef}
-        style={{
-          position: 'absolute',
-          bottom: 'clamp(2rem, 4vh, 4rem)',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '0.75rem',
-          opacity: 0,
-        }}
-      >
-        <span
-          className="font-mono"
-          style={{
-            fontSize: '0.55rem',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-muted)',
-          }}
-        >
-          Scroll
-        </span>
-        <div
-          style={{
-            width: 1,
-            height: 40,
-            backgroundColor: 'var(--color-text-muted)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '40%',
-              backgroundColor: 'var(--color-accent)',
-              animation: 'scrollLine 1.5s ease-in-out infinite',
-            }}
-          />
+          <div className="editorial-scroll" aria-hidden="true">
+            <span>Scroll</span>
+            <ArrowDownRight size={18} strokeWidth={1.4} />
+          </div>
         </div>
-        <style jsx>{`
-          @keyframes scrollLine {
-            0% { top: -40%; }
-            100% { top: 100%; }
-          }
-        `}</style>
       </div>
     </section>
   );
