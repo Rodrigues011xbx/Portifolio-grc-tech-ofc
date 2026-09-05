@@ -27,6 +27,24 @@
 
 </div>
 
+<p align="center">
+    <a href="#about">About</a> ·
+    <a href="#tech-stack">Tech Stack</a> ·
+    <a href="#features">Features</a> ·
+    <a href="#getting-started">Getting Started</a> ·
+    <a href="#project-structure">Structure</a>
+</p>
+
+<table align="center">
+<tr>
+<td align="center"><strong>01</strong><br />Immersive portfolio</td>
+<td align="center"><strong>03D</strong><br />Interactive experiences</td>
+<td align="center"><strong>100%</strong><br />Responsive layout</td>
+</tr>
+</table>
+
+<a id="about"></a>
+
 ## 🎬 About
 
 A high-performance, cinematic portfolio showcasing my work as a **Backend / Full-Stack Developer**. The site features immersive 3D elements, smooth scroll-driven animations, dark/light theme switching, and a terminal-inspired interactive section — all optimized for a premium user experience.
@@ -34,6 +52,8 @@ A high-performance, cinematic portfolio showcasing my work as a **Backend / Full
 > _"Built to be more than a resume — an experience."_
 
 <br />
+
+<a id="tech-stack"></a>
 
 ## 🛠️ Tech Stack
 
@@ -55,6 +75,8 @@ A high-performance, cinematic portfolio showcasing my work as a **Backend / Full
 </div>
 
 <br />
+
+<a id="features"></a>
 
 ## ✨ Features
 
@@ -101,6 +123,8 @@ A high-performance, cinematic portfolio showcasing my work as a **Backend / Full
 
 <br />
 
+<a id="project-structure"></a>
+
 ## 📁 Project Structure
 
 ```
@@ -133,6 +157,8 @@ src/
 ```
 
 <br />
+
+<a id="getting-started"></a>
 
 ## 🚀 Getting Started
 
