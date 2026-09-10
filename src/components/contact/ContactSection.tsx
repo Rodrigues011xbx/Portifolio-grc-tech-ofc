@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCursor } from '@/components/ui/CustomCursor';
@@ -29,7 +29,17 @@ const links = [
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [emailCopied, setEmailCopied] = useState(false);
   const { setCursorVariant, setCursorText } = useCursor();
+
+  const handleContactClick = async (event: React.MouseEvent<HTMLAnchorElement>, label: string) => {
+    if (label !== 'Email') return;
+
+    event.preventDefault();
+    await navigator.clipboard.writeText('contato.gabrieldev.rc@gmail.com');
+    setEmailCopied(true);
+    window.setTimeout(() => setEmailCopied(false), 1800);
+  };
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -143,6 +153,7 @@ export default function ContactSection() {
               target="_blank"
               rel="noopener noreferrer"
               className="contact-link"
+              onClick={(event) => handleContactClick(event, link.label)}
               onMouseEnter={() => {
                 setCursorVariant('text');
                 setCursorText('Open');
@@ -185,7 +196,7 @@ export default function ContactSection() {
                     letterSpacing: '-0.01em',
                   }}
                 >
-                  {link.label}
+                  {link.label === 'Email' && emailCopied ? 'Copied' : link.label}
                 </span>
               </div>
               <ArrowUpRight
